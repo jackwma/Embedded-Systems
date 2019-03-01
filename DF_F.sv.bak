@@ -1,0 +1,89 @@
+module DF_F(Clock, Reset, d, out);
+	/*input logic Clock, Reset;
+	input logic q;
+	output logic out;
+	logic q1, d2;
+	
+	enum{ A, B, C } ps, ns;
+	
+	always_comb begin
+		case(out)
+			A: if
+			
+			B:
+			
+			C:
+		endcase
+	end
+	assign out = 
+	always @(posedge Clock) begin
+		if(Reset) begin
+		
+		end 
+		else begin
+		
+		end
+	end*/
+	output logic out;
+	input logic d, Reset, Clock;
+	
+	always_ff @(posedge Clock) begin
+		if (Reset)
+			out <= 0; // On reset, set to 0
+		else
+			out <= d; // Otherwise out = d
+	end
+	
+endmodule 
+
+module DF_F_testbench();
+	 /*logic clk, reset, w;
+	 logic out;
+
+	 doubleDFF dut (.Clock(clk), .Reset(reset), .q(w), .out(out));
+
+	 // Set up the clock.
+	 parameter CLOCK_PERIOD=100;
+	 initial begin
+		 clk <= 0;
+		 forever #(CLOCK_PERIOD/2) clk <= ~clk;
+	 end
+
+	 // Set up the inputs to the design. Each line is a clock cycle.
+	 initial begin
+		 @(posedge clk);
+		 reset <= 1; @(posedge clk);
+		 reset <= 0; w <= 0; @(posedge clk);
+		 @(posedge clk);
+		 @(posedge clk);
+		 @(posedge clk);
+		 w <= 1; @(posedge clk);
+		 w <= 0; @(posedge clk);
+		 w <= 1; @(posedge clk);
+		 @(posedge clk);
+		 @(posedge clk);
+		 @(posedge clk);
+		 w <= 0; @(posedge clk);
+		 @(posedge clk);
+		 $stop; // End the simulation.
+	 end*/
+	 
+	logic clk, reset, d, q;
+	parameter ClockDelay = 100;
+	
+	DFF dut (.Clock(clk), .Reset(reset), .d(d),. out(q)); // Instantiate the D FF
+	
+	initial begin // Set up the clock
+		clk <= 0;
+		forever #(ClockDelay/2) clk <= ~clk;
+	end
+	
+	initial begin // Set up the reset signal
+		d <= 0; 	reset <= 1; @(posedge clk);
+					reset <= 0; @(posedge clk);
+		d <= 1; 					@(posedge clk);
+		d <= 0; 					@(posedge clk);
+									@(posedge clk);
+		$stop(); // end the simulation
+	end
+endmodule 
